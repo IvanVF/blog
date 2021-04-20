@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
     @GetMapping("/")
-    @ResponseBody
     public String home(Model model) {
         //model.addAttribute("title", "Main Page");
         return "home";
