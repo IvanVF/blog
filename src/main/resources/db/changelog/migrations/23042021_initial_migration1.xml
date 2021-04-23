@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <!-- Создание таблицы post-->
+    <changeSet author="FeinIV" id="23042021_initial_migration_1">
+        <createTable tableName="post">
+        			<column name="id" type="uuid">
+        				<constraints primaryKey="true" nullable="false" unique="true" />
+        			</column>
+        			<column name="anons" type="varchar(255)" />
+        			<column name="full_text" type="varchar(10000)" />
+        			<column name="title" type="varchar(255)" />
+        			<column name="views" type="integer" />
+        </createTable>
+    </changeSet>
+
+	<!-- Заполнение первой строки пробными значениями -->
+	<changeSet author="FeinIV" id="23042021_initial_migration_2">
+		<sql>
+			INSERT INTO post (id, anons, full_text, title, views)
+			VALUES ('66ba7718-6cd0-42a2-b2b1-9c6a58340c24', 'Пробный текст анонса', 'Описание анонса', 'Заголовок анонса', 15)
+		</sql>
+	</changeSet>
+
+</databaseChangeLog>
