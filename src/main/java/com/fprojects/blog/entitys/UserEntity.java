@@ -2,7 +2,6 @@ package com.fprojects.blog.entitys;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,10 +13,10 @@ import java.util.UUID;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "t_user")
 @Data
 @NoArgsConstructor
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,11 +28,19 @@ public class User implements UserDetails {
     @Size(min = 2, message = "Не меньше 2 знаков")
     private String password;
 
+    private boolean active;
+
     @Transient
     private String passwordConfirm;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    /*@ManyToMany(fetch = FetchType.EAGER)
+    private Set<RoleEntity> roles;*/
+
+    @ManyToMany
+    @JoinTable(name = "users_roles",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<RoleEntity> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,4 +72,9 @@ public class User implements UserDetails {
         return true;
     }
 
+    public UserEntity(String username, String password, String passwordConfirm) {
+        this.username = username;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+    }
 }

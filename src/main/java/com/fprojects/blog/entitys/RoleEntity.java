@@ -10,10 +10,10 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 @Data
 @NoArgsConstructor
-public class Role implements GrantedAuthority {
+public class RoleEntity implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,20 +22,20 @@ public class Role implements GrantedAuthority {
     @Size(min = 2, message = "Минимум 2 символа")
     private String name;
 
-    @Transient
+    /*@Transient
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private Set<UserEntity> users;*/
 
     @Override
     public String getAuthority() {
         return getName();
     }
 
-    public Role(UUID id) {
+    public RoleEntity(UUID id) {
         this.id = id;
     }
 
-    public Role(UUID id, String name) {
+    public RoleEntity(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
