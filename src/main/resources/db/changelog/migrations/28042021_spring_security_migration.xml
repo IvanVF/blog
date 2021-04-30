@@ -52,9 +52,11 @@
             ('2b1a04bf-2f9a-4f87-b12d-134b2635daf5', 'ROLE_USER')
         </sql>
 
+        <!-- Добавление администратора и пользователя asd@asd.com в таблицу users_roles -->
         <sql>
             INSERT INTO users_roles VALUES
-            ('28f0c98e-0da7-4bc5-8027-f7a109689c59', '19d6086c-39fa-4a87-b579-4c5d85a41451')
+            ('28f0c98e-0da7-4bc5-8027-f7a109689c59', '19d6086c-39fa-4a87-b579-4c5d85a41451'),
+            ('2b1a04bf-2f9a-4f87-b12d-134b2635daf5','1eb1559e-facc-4ff2-bf4b-59d2b4aafa47')
         </sql>
 
         <!-- Добавление администратора в таблицу пользователей username=admin, password=123poi -->
@@ -65,9 +67,13 @@
             <column name="active" value="true" />
         </insert>
 
-    </changeSet>
-
-    <changeSet author="FeinIV" id="28042021_spring_security_migration_2">
+        <!-- Добавление пробного пользователя в таблицу пользователей username=asd@asd.com, password=100 -->
+        <insert tableName="users">
+            <column name="id" value="1eb1559e-facc-4ff2-bf4b-59d2b4aafa47" />
+            <column name="username" value="asd@asd.com" />
+            <column name="password" value="$2y$12$rJ4LzzaDyi/DPNSzYtzr1.r6VX6xEx9DU9vHKROeYV5ACcvxgZdLy" />
+            <column name="active" value="true" />
+        </insert>
 
     </changeSet>
 
