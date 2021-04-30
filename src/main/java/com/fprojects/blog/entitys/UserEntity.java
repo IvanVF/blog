@@ -13,7 +13,7 @@ import java.util.UUID;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "t_user")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 public class UserEntity implements UserDetails {
@@ -32,9 +32,6 @@ public class UserEntity implements UserDetails {
 
     @Transient
     private String passwordConfirm;
-
-    /*@ManyToMany(fetch = FetchType.EAGER)
-    private Set<RoleEntity> roles;*/
 
     @ManyToMany
     @JoinTable(name = "users_roles",

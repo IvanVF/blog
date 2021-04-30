@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<RoleEntity> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
     }
 
     public UserEntity findUserById(UUID id) {
@@ -66,8 +66,9 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setRoles(Collections.singleton(new RoleEntity(UUID.fromString("a9a1deb1-7bf5-4fb4-9fa9-756663fb59af"), "ROLE_USER")));
+        user.setRoles(Collections.singleton(new RoleEntity(UUID.fromString("2b1a04bf-2f9a-4f87-b12d-134b2635daf5"), "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(true);
         userRepository.save(user);
         return true;
     }

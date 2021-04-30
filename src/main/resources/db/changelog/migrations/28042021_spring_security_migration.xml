@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="FeinIV" id="28042021_spring_security_migration_1">
+        <!-- Создание таблицы users-->
+        <createTable tableName="users">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" unique="true" />
+            </column>
+            <column name="username" type="varchar(255)" />
+            <column name="password" type="varchar(10000)" />
+            <column name="active" type="boolean" />
+        </createTable>
+
+        <!-- Создание таблицы roles-->
+        <createTable tableName="roles">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false" unique="true" />
+            </column>
+            <column name="role" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Создание таблицы users_roles-->
+        <createTable tableName="users_roles">
+            <column name="role_id" type="uuid">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Создание внешнего ключа для таблицы пользоватлей на таблицу ролей -->
+        <!--<addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="id"
+                                 constraintName="fk_user_role"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+        />-->
+
+        <!-- Заполнение таблицы ролей -->
+        <sql>
+            INSERT INTO roles VALUES
+            ('28f0c98e-0da7-4bc5-8027-f7a109689c59', 'ROLE_ADMIN'),
+            ('2b1a04bf-2f9a-4f87-b12d-134b2635daf5', 'ROLE_USER')
+        </sql>
+
+        <sql>
+            INSERT INTO users_roles VALUES
+            ('28f0c98e-0da7-4bc5-8027-f7a109689c59', '19d6086c-39fa-4a87-b579-4c5d85a41451')
+        </sql>
+
+        <!-- Добавление администратора в таблицу пользователей username=admin, password=123poi -->
+        <insert tableName="users">
+            <column name="id" value="19d6086c-39fa-4a87-b579-4c5d85a41451" />
+            <column name="username" value="Admin" />
+            <column name="password" value="$2y$12$ie1XMbsdm4n3Wdj1jWHaI.Vg0lrBkwynFOQYAUG.1thUoSU712Cla" />
+            <column name="active" value="true" />
+        </insert>
+
+    </changeSet>
+
+    <changeSet author="FeinIV" id="28042021_spring_security_migration_2">
+
+    </changeSet>
+
+</databaseChangeLog>

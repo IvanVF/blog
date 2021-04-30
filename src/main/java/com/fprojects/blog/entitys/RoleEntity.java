@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +19,7 @@ public class RoleEntity implements GrantedAuthority {
     private UUID id;
 
     @Size(min = 2, message = "Минимум 2 символа")
-    private String name;
+    private String role;
 
     /*@Transient
     @ManyToMany(mappedBy = "roles")
@@ -28,15 +27,15 @@ public class RoleEntity implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return getName();
+        return getRole();
     }
 
     public RoleEntity(UUID id) {
         this.id = id;
     }
 
-    public RoleEntity(UUID id, String name) {
+    public RoleEntity(UUID id, String role) {
         this.id = id;
-        this.name = name;
+        this.role = role;
     }
 }
